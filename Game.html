@@ -1,0 +1,109 @@
+<html>
+<head>
+<script type="text/javascript" src="./Map1.js"></script>
+<script type="text/javascript" src="./Land.js"></script>
+<script type="text/javascript" src="./Hole.js"></script>
+<script type="text/javascript" src="./Piece.js"></script>
+<script type="text/javascript" src="./Mario.js"></script>
+<script type="text/javascript" src="./Music.js"></script>
+</head>
+<body style="overflow-x: hidden;overflow-y: hidden">
+<div id="map">
+</div>
+<script type="text/javascript">
+var land = new Land("land",map.mapWidth,0,570,20);
+var mario = new Mario("right",0,500,30,70);
+var music = new Music('music/happy-case.mp3','music/lose.mp3');
+var gameOver = false;
+
+var moveMario = function (event) {
+	music.playHappyRepeated();
+	if(gameOver == true) {
+		music.stopHappy();
+		music.playLose();
+		clearInterval(mario.moveInterval);
+		mario.fall(200);
+		return;
+	}
+	//console.log(new Date());
+	if(event.keyCode == '37'){ // left
+		if(mario.isMoving)
+			return;
+		mario.setDirection('left');
+		//mario.move();
+		mario.isMoving = true;
+		mario.moveInterval = setInterval(mario.move.bind(mario),50);
+	}
+	else if(event.keyCode == '39') { //right
+		if(mario.isMoving)
+			return;
+		mario.setDirection('right');
+		//mario.move();
+		mario.isMoving = true;
+		mario.moveInterval = setInterval(mario.move.bind(mario),50);
+	}
+	else if(event.keyCode == '32'){ // space
+		mario.jump();
+	}
+}
+
+var stopMario = function(event) {
+	if(gameOver == true) {
+		music.stopHappy();
+		music.playLose();
+		clearInterval(mario.moveInterval);
+		mario.fall(200);
+		return;
+	}
+	if(event.keyCode == '37' || event.keyCode == '39') {
+		mario.stop();
+		mario.isMoving = false;
+		clearInterval(mario.moveInterval);
+	}
+}
+
+var jumpMario = function(event) {
+	if(gameOver == true) {
+		return;
+	}
+	if(event.keyCode == '32'){ // space
+		mario.jump();
+	}
+}
+
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+}
+
+function drawMap(){
+	
+	land.draw();
+	
+	var holes = [];
+	
+	map.holes.forEach((hole,index) => {
+		var newHole  = new Hole(index+1,hole.width,hole.left,land);
+		newHole.draw();
+		holes.push(newHole);
+	});
+	
+	var pieces = [];
+	
+	map.pieces.forEach((piece,index) => {
+		var newPiece  = new Piece(index+1,piece.width,piece.left,piece.top,land);
+		newPiece.draw();
+		pieces.push(newPiece);
+	});
+	
+	
+	mario.init(holes,pieces);
+	
+	document.body.addEventListener('keydown',moveMario);
+	document.body.addEventListener('keyup',stopMario);
+	//document.body.addEventListener('keypress',jumpMario);
+}
+drawMap();
+
+</script>
+</body>
+</html>
