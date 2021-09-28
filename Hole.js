@@ -8,7 +8,7 @@ var Hole = function(id,width,left,land) {
 	this.draw = function() {
 		var hole = document.createElement("div");
 		hole.setAttribute("id",this.id);
-		hole.setAttribute("style","z-index:-100;width:" + this.width+"px;background-color:white;position:absolute;left:"+this.left+"px;top:"+this.top+"px;height:"+20+"px");
+		hole.setAttribute("style","z-index:-100;width:" + this.width+"px;background-color:white;position:absolute;left:"+this.left+"px;top:"+this.top+"px;height:"+this.height+"px");
 		document.getElementById("map").appendChild(hole);
 	}
 }

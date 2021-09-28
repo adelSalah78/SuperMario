@@ -8,7 +8,7 @@ var Land = function(id,width,left,top,height) {
 	this.draw = function() {
 		var land = document.createElement("div");
 		land.setAttribute("id",this.id);
-		land.setAttribute("style","z-index:-110;width:" + this.width+"px;background-color:black;position:absolute;left:"+this.left+"px;top:"+this.top+"px;height:"+20+"px");
+		land.setAttribute("style","z-index:-110;width:" + this.width+"px;background-color:black;position:absolute;left:"+this.left+"px;top:"+this.top+"px;height:"+this.height+"px");
 		document.getElementById("map").appendChild(land);
 	}
 }

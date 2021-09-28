@@ -11,6 +11,13 @@ var map = {
 			"width": 50,
 			"left": 340
 		},
+		
+		{
+			"top": 510,
+			"width": 50,
+			"left": 390
+		},
+		
 		{
 			"top": 220,
 			"width": 55,

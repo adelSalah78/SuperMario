@@ -11,13 +11,19 @@
 <div id="map">
 </div>
 <script type="text/javascript">
-var land = new Land("land",map.mapWidth,0,570,20);
+var land = new Land("land",map.mapWidth,0,570,5);
 var mario = new Mario("right",0,500,30,70);
 var music = new Music('music/happy-case.mp3','music/lose.mp3');
 var gameOver = false;
 
 var moveMario = function (event) {
 	music.playHappyRepeated();
+	if(mario.isJumping && mario.direction == 'right' && event.keyCode == '37'){
+		return;
+	}
+	if(mario.isJumping && mario.direction == 'left' && event.keyCode == '39'){
+		return;
+	}
 	if(gameOver == true) {
 		music.stopHappy();
 		music.playLose();
@@ -32,7 +38,7 @@ var moveMario = function (event) {
 		mario.setDirection('left');
 		//mario.move();
 		mario.isMoving = true;
-		mario.moveInterval = setInterval(mario.move.bind(mario),50);
+		mario.moveInterval = setInterval(mario.move.bind(mario),1);
 	}
 	else if(event.keyCode == '39') { //right
 		if(mario.isMoving)
@@ -40,7 +46,7 @@ var moveMario = function (event) {
 		mario.setDirection('right');
 		//mario.move();
 		mario.isMoving = true;
-		mario.moveInterval = setInterval(mario.move.bind(mario),50);
+		mario.moveInterval = setInterval(mario.move.bind(mario),1);
 	}
 	else if(event.keyCode == '32'){ // space
 		mario.jump();
